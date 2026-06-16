@@ -146,7 +146,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    updateCarouselArrows();
+    // Defer until layout is fully painted (Tailwind CDN + images settle after DOMContentLoaded)
+    requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+            updateCarouselArrows();
+        });
+    });
+    window.addEventListener('load', updateCarouselArrows);
     window.addEventListener('resize', updateCarouselArrows);
 
     function setupAutoScroll(track, prevBtn, nextBtn, intervalMs) {
